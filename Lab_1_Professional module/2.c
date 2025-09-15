@@ -152,7 +152,7 @@ void print_date()
         tm_info->tm_mday, tm_info->tm_mon + 1, tm_info->tm_year + 1900);
 }
 
-void howmuch(char* date_str, char* time_str, char* flag)
+void How_much(char* date_str, char* time_str, char* flag)
 {
     time_t t1, t2;
     double diff;
