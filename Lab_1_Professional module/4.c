@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-int is_prime(unsigned char x)
+int check_prime(unsigned char x)
 {
     int i;
     if (x < 2)
