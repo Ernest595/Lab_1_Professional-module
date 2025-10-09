@@ -1,4 +1,4 @@
-#include <stdio.h>
+/*#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
@@ -105,11 +105,11 @@ struct_user* login_user()
 {
     char login[7];
     int pin;
-    
+
     printf("Enter login: ");
-    
+
     scanf("%6s", login);
-    
+
     struct_user* user = find_user(login);
     if (!user)
     {
@@ -286,4 +286,4 @@ int main()
     }
     free(users);
     return 0;
-}
+}*/
