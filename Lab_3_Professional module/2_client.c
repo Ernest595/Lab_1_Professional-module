@@ -8,15 +8,15 @@
 
 int main()
 {
-    int fd;
-    char buffer[101];
-    int length, i, bytes_written;
-    char* fifo_name = "sp_lab_3_3_fifo";
+    int fed;
+    char buff[101];
+    int len, i, byt_writ;
+    char* fifo_name = "fifo";
     signal(SIGPIPE, SIG_IGN);
     srand(time(NULL));
 
-    fd = open("sp_lab_3_3_fifo", O_WRONLY);
-    if (fd == -1)
+    fed = open("fifo", O_WRONLY);
+    if (fed == -1)
     {
         perror("open");
         return 1;
@@ -24,21 +24,22 @@ int main()
 
     while (1)
     {
-        length = rand() % 100 + 1;
+        len = rand() % 100 + 1;
 
-        for (i = 0; i < length; i++)
+        for (i = 0; i < len; i++)
         {
-            buffer[i] = 'A' + rand() % 26;
+            buff[i] = 'A' + rand() % 26;
         }
-        buffer[length] = '\0';
+        buff[len] = '\0';
 
-        printf("Client: sent '%s'\n", buffer);
+        printf("sent '%s'\n", buff);
 
-        bytes_written = write(fd, buffer, length + 1);
-        if (bytes_written < 0)
+        byt_writ = write(fed, buff, len + 1);
+        if (byt_writ < 0)
         {
-            if (errno == EPIPE) {
-                printf("Client: server closed FIFO.\n");
+            if (errno == EPIPE) 
+            {
+                printf("server closed FIFO.\n");
                 break;
             }
             else
@@ -49,6 +50,6 @@ int main()
         }
         usleep(100000);
     }
-    close(fd);
+    close(fed);
     return 0;
 }

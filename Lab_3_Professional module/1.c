@@ -4,13 +4,13 @@
 
 int main(void)
 {
-    int pid_arr[2];
+    int p_arr[2];
     pid_t pid;
     char buffer[100];
-    char message[] = "Hello world!";
+    char message[] = "Hello";
     size_t ett;
 
-    if (pipe(pid_arr) == -1)
+    if (pipe(p_arr) == -1)
     {
         perror("pipe");
         return 1;
@@ -26,9 +26,9 @@ int main(void)
 
     if (pid == 0)
     {
-        close(pid_arr[0]);
+        close(p_arr[0]);
 
-        ett = write(pid_arr[1], message, strlen(message) + 1);
+        ett = write(p_arr[1], message, strlen(message) + 1);
         if (ett == -1)
         {
             perror("write_ett");
@@ -37,7 +37,7 @@ int main(void)
     }
     else
     {
-        close(pid_arr[1]);
+        close(p_arr[1]);
 
         ett = read(pid_arr[0], buffer, sizeof(buffer));
         if (ett == -1)

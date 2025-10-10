@@ -6,12 +6,12 @@
 #include <string.h>
 
 int main()
-{
-    char* fifo_name = "sp_lab_3_3_fifo";
-    int fd;
-    char buffer[101];
+{e
+    char* fifo_name = "fifo";
+    int fed;
+    char buff[101];
     int length_counts[101];
-    int i, bytes_read, done;
+    int i, byt_read, done;
 
     for (i = 0; i < 101; i++)
     {
@@ -20,8 +20,8 @@ int main()
 
     mkfifo(fifo_name, 0666);
 
-    fd = open(fifo_name, O_RDONLY);
-    if (fd == -1)
+    fed = open(fifo_name, O_RDONLY);
+    if (fed == -1)
     {
         perror("open fifo in server");
         return 1;
@@ -30,22 +30,22 @@ int main()
     done = 0;
     while (!done)
     {
-        bytes_read = read(fd, buffer, sizeof(buffer) - 1);
-        if (bytes_read > 0)
+        byt_read = read(fed, buff, sizeof(buff) - 1);
+        if (byt_read > 0)
         {
-            buffer[bytes_read] = '\0';
-            length_counts[bytes_read]++;
-            printf("Received: %s (length: %d)\n", buffer, bytes_read);
+            buff[byt_read] = '\0';
+            length_counts[byt_read]++;
+            printf("Received: %s (length: %d)\n", buff, byt_read);
 
-            if (length_counts[bytes_read] >= 5)
+            if (length_counts[byt_read] >= 5)
             {
-                printf("Server: Length %d encountered 5 times.\n", bytes_read);
+                printf("Server: Length %d encountered 5 times.\n", byt_read);
                 break;
             }
         }
     }
 
-    close(fd);
+    close(fed);
     unlink(fifo_name);
 
     return 0;
