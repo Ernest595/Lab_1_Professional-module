@@ -6,7 +6,7 @@
 #include <string.h>
 
 int main()
-{e
+{
     char* fifo_name = "fifo";
     int fed;
     char buff[101];
@@ -35,11 +35,11 @@ int main()
         {
             buff[byt_read] = '\0';
             length_counts[byt_read]++;
-            printf("Received: %s (length: %d)\n", buff, byt_read);
+            printf("%s \n", buff, byt_read);
 
             if (length_counts[byt_read] >= 5)
             {
-                printf("Server: Length %d encountered 5 times.\n", byt_read);
+                printf("Length %d encountered 5 times.\n", byt_read);
                 break;
             }
         }
