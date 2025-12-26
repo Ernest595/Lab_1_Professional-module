@@ -1,52 +1,59 @@
 #include <stdio.h>
 #include <unistd.h>
+#include <stdlib.h>
 #include <string.h>
 
-int main(void)
+int main()
 {
-    int p_arr[2];
+    int fd[2];
     pid_t pid;
-    char buffer[100];
-    char message[] = "Hello";
-    size_t ett;
+    char buf[BUFSIZ];
+    char const* message = "message example 0000_________ooooo";
+    size_t read_bytes, written_bytes;
 
-    if (pipe(p_arr) == -1)
+    if (pipe(fd) == -1)
     {
-        perror("pipe");
-        return 1;
+        return EXIT_FAILURE;
     }
 
     pid = fork();
 
     if (pid == -1)
     {
-        perror("fork");
-        return 1;
+        return EXIT_FAILURE;
     }
-
-    if (pid == 0)
+    else if (pid == 0)
     {
-        close(p_arr[0]);
+        close(fd[1]);
 
-        ett = write(p_arr[1], message, strlen(message) + 1);
-        if (ett == -1)
+        read_bytes = read(fd[0], buf, BUFSIZ - 1);
+        if (read_bytes == -1)
         {
-            perror("write_ett");
-            return 1;
+            perror("read");
+
+            exit(EXIT_FAILURE);
         }
+
+        buf[read_bytes] = 0;
+        printf("im received: %s\n", buf);
+
+        close(fd[0]);
     }
     else
     {
-        close(p_arr[1]);
+        close(fd[0]);
 
-        ett = read(pid_arr[0], buffer, sizeof(buffer));
-        if (ett == -1)
+        written_bytes = write(fd[1], message, (strlen(message) + 1) * sizeof(char));
+        if (written_bytes == -1)
         {
-            perror("read_ett");
-            return 1;
+            perror("write");
+
+            exit(EXIT_FAILURE);
         }
 
-        printf("%s\n", buffer);
+        close(fd[1]);
+
+        wait(NULL);
     }
 
     return 0;
